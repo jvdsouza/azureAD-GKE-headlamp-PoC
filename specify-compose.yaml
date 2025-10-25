@@ -1,0 +1,128 @@
+name: spec-kit-poc
+version: "3.9"
+
+services:
+  kind:
+    image: docker:25.0.3-cli-alpine3.20
+    container_name: kind-cluster
+    volumes:
+      - ./k8s/kind-config.yaml:/kind-config.yaml
+      - ./api-port.env:/api-port.env
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: >
+      sh -c "
+        echo '🧹 Cleaning up any existing Kind cluster...';
+        kind delete cluster --name spec-kit || true;
+        echo '🚀 Creating new Kind cluster...';
+        kind create cluster --name spec-kit --config /kind-config.yaml;
+        API_PORT=$(docker inspect -f '{{ (index (index .NetworkSettings.Ports \"6443/tcp\") 0).HostPort }}' spec-kit-control-plane);
+        echo \"API_PORT=$API_PORT\" > /api-port.env;
+        echo '✅ Kind cluster ready on host port' $API_PORT;
+        sleep infinity;
+      "
+    healthcheck:
+      test: ["CMD", "kind", "get", "clusters"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+
+  dex:
+    image: ghcr.io/dexidp/dex:v2.37.0
+    container_name: dex
+    ports:
+      - "5556:5556"
+    volumes:
+      - ./dex/config.yaml:/etc/dex/config.yaml
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:5556/dex/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  headlamp:
+    image: ghcr.io/headlamp-k8s/headlamp:latest
+    container_name: headlamp
+    depends_on:
+      kind:
+        condition: service_healthy
+      dex:
+        condition: service_healthy
+    ports:
+      - "4566:4466"
+    volumes:
+      - ./api-port.env:/api-port.env
+    command: >
+      sh -c "
+        if [ -f /api-port.env ]; then
+          . /api-port.env;
+          export KUBERNETES_API_URL=https://host.docker.internal:${API_PORT};
+          echo '🌐 Headlamp using ${KUBERNETES_API_URL}';
+        else
+          echo '⚠️  api-port.env not found — Headlamp may not connect to cluster.';
+        fi;
+        ./headlamp;
+      "
+
+  backstage:
+    image: headlamp-backstage:latest
+    build:
+      context: ./backstage-plugin
+      dockerfile: Dockerfile
+    container_name: backstage
+    depends_on:
+      headlamp:
+        condition: service_started
+    ports:
+      - "7107:7007"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./api-port.env:/api-port.env
+    command: >
+      sh -c "
+        if [ -f /api-port.env ]; then
+          . /api-port.env;
+          export KUBERNETES_API_URL=https://host.docker.internal:${API_PORT};
+          echo '🌐 Backstage Headlamp plugin starting with ${KUBERNETES_API_URL}';
+        fi;
+        node packages/backend --config app-config.yaml;
+      "
+
+  spec-tests:
+    build:
+      context: ./tests
+      dockerfile: Dockerfile
+    container_name: spec-tests
+    depends_on:
+      kind:
+        condition: service_healthy
+    volumes:
+      - ./api-port.env:/api-port.env
+      - ./k8s:/workspace/k8s
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: >
+      sh -c "
+        echo '⏳ Waiting for Kind to create API port file...';
+        for i in $(seq 1 30); do
+          if [ -f /api-port.env ]; then
+            echo '✅ Found api-port.env. Loading vars...';
+            . /api-port.env;
+            export KUBERNETES_API_URL=https://host.docker.internal:${API_PORT};
+            echo '🌐 Using ${KUBERNETES_API_URL}';
+            echo '⏳ Waiting for Kubernetes API to become ready...';
+            for j in $(seq 1 30); do
+              if kubectl --insecure-skip-tls-verify --server=${KUBERNETES_API_URL} cluster-info >/dev/null 2>&1; then
+                echo '✅ Cluster reachable, running pytest...';
+                pytest tests/ --api ${KUBERNETES_API_URL};
+                exit 0;
+              fi;
+              echo '  💤 Still waiting... ($j/30)'; sleep 5;
+            done;
+            echo '❌ Kubernetes API never became ready. Exiting cleanly.';
+            exit 1;
+          fi;
+          echo '  💤 Waiting for api-port.env... ($i/30)'; sleep 5;
+        done;
+        echo '❌ api-port.env not found after 150 seconds. Exiting cleanly.';
+        exit 1;
+      "

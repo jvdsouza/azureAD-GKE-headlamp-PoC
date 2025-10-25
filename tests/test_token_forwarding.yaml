@@ -1,0 +1,6 @@
+import requests
+
+def test_token_forwarding_to_gke(oidc_token):
+    headers = {"Authorization": f"Bearer {oidc_token['raw']}"}
+    r = requests.get("https://gke-api.local/api/v1/namespaces", headers=headers)
+    assert r.status_code in (200, 403)

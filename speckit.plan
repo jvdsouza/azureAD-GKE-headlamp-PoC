@@ -1,0 +1,14 @@
+Goal: Verify direct Azure AD OIDC integration with GKE Identity Service.
+
+Phases:
+  - Run setup: install all dependencies and bootstrap Backstage app
+  - Local sandbox with Kind + Dex (mock Azure AD)
+  - Deploy Backstage (Azure OIDC) + Headlamp plugin
+  - Validate Azure AD tokens accepted by GKE
+  - Validate RBAC through Headlamp UI
+
+Success Criteria:
+  - Login via Backstage succeeds.
+  - Headlamp forwards Bearer token to GKE.
+  - GKE authenticates via Azure AD issuer.
+  - RBAC enforced as defined for each user.

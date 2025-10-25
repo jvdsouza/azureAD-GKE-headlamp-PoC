@@ -1,0 +1,12 @@
+auth:
+  providers:
+    azure:
+      clientId: <CLIENT_ID>
+      clientSecret: <CLIENT_SECRET>
+      tenantId: <TENANT_ID>
+      scopes: [openid, email, profile]
+
+plugins:
+  headlamp:
+    url: https://headlamp.<your-domain>
+    forwardAuthToken: true

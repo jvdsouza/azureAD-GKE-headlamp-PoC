@@ -1,0 +1,34 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20251024233351
+Username: DESKTOP-3VQA4IN\jason
+RunAs User: DESKTOP-3VQA4IN\jason
+Configuration Name: 
+Machine: DESKTOP-3VQA4IN (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\jason\AppData\Local\Programs\Microsoft VS Code\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Process ID: 38528
+PSVersion: 5.1.26100.6584
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.6584
+BuildVersion: 10.0.26100.6584
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+🚀 Starting Spec Kit PoC environment...
+
+🩺 Waiting for dex to become healthy...
+✅ dex is healthy!
+🩺 Waiting for backstage to become healthy...
+⚠️  backstage has no healthcheck (skipping)
+🩺 Waiting for headlamp to become healthy...
+⚠️  headlamp has no healthcheck (skipping)
+🧪 Running test suite (pytest)...
+
+📋 Checking test container exit code...
+✅ All tests passed successfully!
+**********************
+Windows PowerShell transcript end
+End time: 20251024233727
+**********************

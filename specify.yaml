@@ -1,0 +1,107 @@
+version: '3.9'
+
+services:
+  # 🧱 KIND CLUSTER
+  kind:
+    image: kindest/node:v1.30.0
+    container_name: kind-cluster
+    privileged: true
+    command: ["kind", "create", "cluster",
+              "--config=/workspace/k8s/kind-config.yaml",
+              "--name", "spec-kit"]
+    volumes:
+      - ./k8s:/workspace/k8s
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "kubectl", "cluster-info"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    # Waits until Kind’s API is responding before other services depend on it.
+
+  # 🔑 DEX (OIDC PROVIDER)
+  dex:
+    image: ghcr.io/dexidp/dex:v2.37.0
+    container_name: dex
+    ports:
+      - "5556:5556"
+    volumes:
+      - ./k8s/dex-config.yaml:/etc/dex/config.yaml
+    command: ["dex", "serve", "/etc/dex/config.yaml"]
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:5556/dex/.well-known/openid-configuration"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    # Confirms the OIDC discovery endpoint is reachable before Backstage or Headlamp start.
+
+  # 🎛️ BACKSTAGE PORTAL
+  backstage:
+    image: node:18
+    container_name: backstage
+    working_dir: /workspace/backstage
+    ports:
+      - "7007:7007"
+    volumes:
+      - ./backstage:/workspace/backstage
+    environment:
+      - NODE_ENV=development
+    command: ["pnpm", "dev"]
+    depends_on:
+      dex:
+        condition: service_healthy
+      kind:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:7007"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 25s
+    # Ensures the Backstage web server is listening before Headlamp or tests begin.
+
+  # 🧭 HEADLAMP DASHBOARD
+  headlamp:
+    image: ghcr.io/headlamp-k8s/headlamp:latest
+    container_name: headlamp
+    ports:
+      - "4466:4466"
+    depends_on:
+      dex:
+        condition: service_healthy
+      kind:
+        condition: service_healthy
+      backstage:
+        condition: service_healthy
+    environment:
+      - OIDC_ISSUER=http://dex:5556/dex
+      - OIDC_CLIENT_ID=headlamp
+      - OIDC_CLIENT_SECRET=headlamp-secret
+      - OIDC_REDIRECT_URL=http://localhost:4466/oidc/callback
+      - CLUSTER_API=https://kind-control-plane:6443
+    volumes:
+      - ./k8s/headlamp-values.yaml:/etc/headlamp/config.yaml
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:4466"]
+      interval: 15s
+      timeout: 5s
+      retries: 8
+      start_period: 25s
+    # Confirms Headlamp’s UI is reachable before test runner executes.
+
+  # 🧪 TEST RUNNER
+  test-runner:
+    image: python:3.11
+    container_name: spec-tests
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    depends_on:
+      headlamp:
+        condition: service_healthy
+      backstage:
+        condition: service_healthy
+    command: ["pytest", "tests/"]
+    # Waits until Headlamp & Backstage are healthy before starting integration tests.

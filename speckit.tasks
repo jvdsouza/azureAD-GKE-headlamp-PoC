@@ -1,0 +1,8 @@
+- Register Azure AD app and enable GKE Identity Service.
+- Deploy Backstage with Azure OIDC provider.
+- Deploy Headlamp plugin pointing to Backstage and GKE.
+- Apply RBAC roles (view, admin) for test users.
+- Run login flow test to verify Azure AD token issuance.
+- Run token forwarding test to confirm Authorization header.
+- Run UI RBAC test to verify visible permissions.
+- Check GKE audit logs for Azure AD usernames.

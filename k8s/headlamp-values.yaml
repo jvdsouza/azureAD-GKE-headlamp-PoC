@@ -1,0 +1,11 @@
+oidc:
+  enabled: true
+  issuer: https://login.microsoftonline.com/<TENANT_ID>/v2.0
+  clientID: <CLIENT_ID>
+  redirectURL: https://<your-headlamp-domain>/oidc/callback
+  scopes: [openid, profile, email]
+
+backend:
+  mode: direct-token
+  trustedIdentitySource: backstage
+  identityHeader: "Authorization"

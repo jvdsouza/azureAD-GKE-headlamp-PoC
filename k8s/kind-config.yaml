@@ -1,0 +1,41 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+networking:
+  apiServerAddress: "0.0.0.0"
+  apiServerPort: 0         # 🔁 Let Docker pick a free host port automatically
+  disableDefaultCNI: false
+  kubeProxyMode: "iptables"
+
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.30.0
+    extraPortMappings:
+      # Headlamp (remapped from 4466 → 4566)
+      - containerPort: 4466
+        hostPort: 4566
+        protocol: TCP
+      # Backstage (remapped from 7007 → 7107)
+      - containerPort: 7007
+        hostPort: 7107
+        protocol: TCP
+      # Kubernetes API – let Kind assign a random free port
+      - containerPort: 6443
+        hostPort: 0
+        protocol: TCP
+    kubeadmConfigPatches:
+      - |
+        kind: ClusterConfiguration
+        apiServer:
+          extraArgs:
+            oidc-issuer-url: "http://dex:5556/dex"
+            oidc-client-id: "headlamp"
+            oidc-username-claim: "email"
+            oidc-groups-claim: "groups"
+            oidc-ca-file: "/etc/kubernetes/pki/ca.crt"
+        controllerManager:
+          extraArgs:
+            bind-address: "0.0.0.0"
+        scheduler:
+          extraArgs:
+            bind-address: "0.0.0.0"
