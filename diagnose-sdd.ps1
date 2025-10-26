@@ -1,59 +1,60 @@
-﻿#requires -Version 5.1
-Clear-Host
-Write-Host "🩺 Starting SpecKit Diagnostic Workflow..." -ForegroundColor Cyan
+﻿Write-Host "`n🔍 Running SpecKit SDD diagnostics..." -ForegroundColor Cyan
 
-# --- Config ---
+# --- Configuration ---
 $composeFile = "specify-compose.yaml"
-$services = @("kind", "dex", "headlamp", "backstage", "spec-tests")
+$workspacePath = "C:\Users\jason\programming\azureAD-GKE-headlamp"
+$kindPorts = @(6443, 6445, 4466, 4566, 7007, 7107, 5556)
+$containers = @("spec-tests", "kind-cluster", "dex", "backstage", "headlamp")
 
-function Check-Service {
-    param([string]$service)
-    Write-Host "`n🔍 Checking logs for $service..." -ForegroundColor Yellow
-    docker compose -f $composeFile logs --tail 20 $service
-}
-
-function Wait-Service {
-    param([string]$service, [int]$timeout = 120)
-    Write-Host "⏳ Waiting for $service to become healthy (timeout $timeout s)..." -ForegroundColor DarkCyan
-    $elapsed = 0
-    while ($elapsed -lt $timeout) {
-        $health = docker inspect --format "{{.State.Health.Status}}" "$((docker compose -f $composeFile ps -q $service))" 2>$null
-        if ($health -eq "healthy") {
-            Write-Host "✅ $service is healthy!" -ForegroundColor Green
-            return
+# --- Step 1: Check for locked ports ---
+Write-Host "`n⚙️ Checking for port conflicts..." -ForegroundColor Yellow
+foreach ($port in $kindPorts) {
+    $portUsed = netstat -ano | findstr ":$port"
+    if ($portUsed) {
+        Write-Host "   Port $port is in use. Releasing..." -ForegroundColor Red
+        $pid = ($portUsed -split "\s+")[-1]
+        if ($pid -match '^\d+$') {
+            try {
+                Stop-Process -Id $pid -Force -ErrorAction Stop
+                Write-Host "   ✅ Released port $port (PID: $pid)" -ForegroundColor Green
+            } catch {
+                Write-Host "   ⚠️ Failed to stop process $pid (port $port)" -ForegroundColor Yellow
+            }
         }
-        Start-Sleep -Seconds 5
-        $elapsed += 5
-    }
-    Write-Host "❌ $service failed to become healthy in $timeout seconds." -ForegroundColor Red
-    Check-Service $service
-    throw "Service $service unhealthy"
-}
-
-Write-Host "`n🧹 Cleaning up old environment..." -ForegroundColor DarkGray
-docker compose -f $composeFile down -v --remove-orphans | Out-Null
-docker ps -a --format "{{.Names}}" | findstr "spec-kit" | ForEach-Object { docker rm -f $_ } 2>$null | Out-Null
-
-Write-Host "`n🚀 Rebuilding environment..." -ForegroundColor Cyan
-docker compose -f $composeFile build | Out-Null
-
-# Step-by-step startup
-foreach ($svc in $services) {
-    Write-Host "`n=====================" -ForegroundColor Gray
-    Write-Host "▶️  Starting service: $svc" -ForegroundColor Magenta
-    Write-Host "=====================" -ForegroundColor Gray
-    docker compose -f $composeFile up -d $svc | Out-Null
-    Start-Sleep -Seconds 3
-
-    if ($svc -eq "dex") { Wait-Service "dex" 90 }
-    elseif ($svc -eq "kind") { Start-Sleep -Seconds 60 } # Kind can take longer
-    elseif ($svc -eq "spec-tests") {
-        Write-Host "🧪 Running SpecKit tests..." -ForegroundColor Cyan
-        docker logs -f (docker compose -f $composeFile ps -q spec-tests)
     } else {
-        Start-Sleep -Seconds 10
-        Check-Service $svc
+        Write-Host "   Port $port is free." -ForegroundColor Green
     }
 }
 
-Write-Host "`n🏁 Diagnostics complete. Review logs above for details." -ForegroundColor Cyan
+# --- Step 2: Remove old containers ---
+Write-Host "`n🧹 Cleaning up stale containers..." -ForegroundColor Yellow
+foreach ($container in $containers) {
+    docker rm -f $container 2>$null | Out-Null
+}
+docker network prune -f | Out-Null
+
+# --- Step 3: Clear BuildKit cache ---
+Write-Host "`n🧼 Clearing Docker build cache..." -ForegroundColor Yellow
+docker builder prune -af | Out-Null
+
+# --- Step 4: Rebuild SpecKit stack ---
+Write-Host "`n🔨 Rebuilding SpecKit stack..." -ForegroundColor Cyan
+cd $workspacePath
+docker compose -f $composeFile build --no-cache
+
+# --- Step 5: Start the environment ---
+Write-Host "`n🚀 Starting environment..." -ForegroundColor Cyan
+docker compose -f $composeFile up -d
+
+# --- Step 6: Health checks ---
+Write-Host "`n🩺 Checking container health..." -ForegroundColor Cyan
+foreach ($container in $containers) {
+    $status = docker ps -a --format "{{.Names}}: {{.Status}}" | findstr $container
+    if ($status) {
+        Write-Host "   $status"
+    } else {
+        Write-Host "   ⚠️ $container not found!"
+    }
+}
+
+Write-Host "`n✅ Diagnostics complete. If tests still fail, re-run with '--no-cache'." -ForegroundColor Green

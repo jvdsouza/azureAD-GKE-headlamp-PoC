@@ -1,0 +1,49 @@
+app:
+  title: Headlamp PoC Backstage
+  baseUrl: http://localhost:7107
+
+backend:
+  baseUrl: http://localhost:7107
+  listen:
+    port: 7007
+  cors:
+    origin: http://localhost:7107
+  auth:
+    environment: development
+  # this allows plugins like headlamp-backend to register their routes
+  reading:
+    allow:
+      - host: localhost
+      - host: headlamp
+      - host: dex
+      - host: host.docker.internal
+
+integrations:
+  github:
+    - host: github.com
+
+auth:
+  providers:
+    oidc:
+      development:
+        clientId: headlamp
+        clientSecret: super-secret
+        metadataUrl: http://dex:5556/dex/.well-known/openid-configuration
+        tokenUrl: http://dex:5556/dex/token
+        authorizationUrl: http://dex:5556/dex/auth
+        callbackUrl: http://localhost:7107/api/auth/oidc/handler/frame
+        scope: openid profile email groups
+        prompt: login
+
+kubernetes:
+  serviceLocatorMethod:
+    type: multiTenant
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - url: https://host.docker.internal:${API_PORT}
+          name: spec-kit
+          authProvider: oidc
+          skipTLSVerify: true
+          serviceAccountToken: ${K8S_SERVICE_ACCOUNT_TOKEN:-""}
+          dashboardUrl: http://headlamp:4466

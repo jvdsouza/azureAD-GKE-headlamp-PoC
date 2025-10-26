@@ -3,38 +3,61 @@ version: "3.9"
 
 services:
   kind:
-    image: docker:25.0.3-cli-alpine3.20
+    build:
+      context: .
+      dockerfile: Dockerfile.kind
     container_name: kind-cluster
+    privileged: true
+    network_mode: "host"
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+    tmpfs:
+      - /run
+      - /tmp
+    environment:
+      - KUBECONFIG=/etc/kubernetes/admin.conf
     volumes:
       - ./k8s/kind-config.yaml:/kind-config.yaml
       - ./api-port.env:/api-port.env
       - /var/run/docker.sock:/var/run/docker.sock
+      - /lib/modules:/lib/modules:ro
     command: >
       sh -c "
         echo '🧹 Cleaning up any existing Kind cluster...';
         kind delete cluster --name spec-kit || true;
         echo '🚀 Creating new Kind cluster...';
-        kind create cluster --name spec-kit --config /kind-config.yaml;
-        API_PORT=$(docker inspect -f '{{ (index (index .NetworkSettings.Ports \"6443/tcp\") 0).HostPort }}' spec-kit-control-plane);
-        echo \"API_PORT=$API_PORT\" > /api-port.env;
-        echo '✅ Kind cluster ready on host port' $API_PORT;
+        kind create cluster --name spec-kit --config /kind-config.yaml --retain --wait 120s --verbosity 6;
+
+        echo '⏳ Waiting for spec-kit-control-plane to be ready...';
+        for i in $(seq 1 30); do
+          if docker inspect spec-kit-control-plane >/dev/null 2>&1; then
+            break;
+          fi;
+          echo '  💤 Waiting for Kind node... ($i/30)'; sleep 3;
+        done;
+
+        # Always use Kubernetes default port
+        echo 'API_PORT=6443' > /api-port.env;
+        echo '✅ Kind cluster ready on host port 6443';
         sleep infinity;
       "
     healthcheck:
       test: ["CMD", "kind", "get", "clusters"]
-      interval: 20s
+      interval: 25s
       timeout: 10s
       retries: 5
 
   dex:
     image: ghcr.io/dexidp/dex:v2.37.0
     container_name: dex
+    network_mode: "bridge"
     ports:
       - "5556:5556"
     volumes:
       - ./dex/config.yaml:/etc/dex/config.yaml
     healthcheck:
-      test: ["CMD-SHELL", "wget --spider -q http://localhost:5556/dex/healthz || exit 1"]
+      test: ["CMD", "wget", "--spider", "http://localhost:5556/dex/.well-known/openid-configuration"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -42,24 +65,26 @@ services:
   headlamp:
     image: ghcr.io/headlamp-k8s/headlamp:latest
     container_name: headlamp
+    network_mode: "bridge"
     depends_on:
       kind:
         condition: service_healthy
       dex:
         condition: service_healthy
+    environment:
+      - OIDC_ENABLED=true
+      - OIDC_CLIENT_ID=headlamp
+      - OIDC_ISSUER_URL=http://dex:5556/dex
+      - OIDC_REDIRECT_URI=http://headlamp:4466/callback
+      - OIDC_SCOPES=openid,email,profile,offline_access
     ports:
       - "4566:4466"
     volumes:
       - ./api-port.env:/api-port.env
     command: >
       sh -c "
-        if [ -f /api-port.env ]; then
-          . /api-port.env;
-          export KUBERNETES_API_URL=https://host.docker.internal:${API_PORT};
-          echo '🌐 Headlamp using ${KUBERNETES_API_URL}';
-        else
-          echo '⚠️  api-port.env not found — Headlamp may not connect to cluster.';
-        fi;
+        export KUBERNETES_API_URL=https://host.docker.internal:6443;
+        echo '🌐 Headlamp using ${KUBERNETES_API_URL}';
         ./headlamp;
       "
 
@@ -69,6 +94,7 @@ services:
       context: ./backstage-plugin
       dockerfile: Dockerfile
     container_name: backstage
+    network_mode: "bridge"
     depends_on:
       headlamp:
         condition: service_started
@@ -76,16 +102,11 @@ services:
       - "7107:7007"
     environment:
       - NODE_ENV=development
-    volumes:
-      - ./api-port.env:/api-port.env
     command: >
       sh -c "
-        if [ -f /api-port.env ]; then
-          . /api-port.env;
-          export KUBERNETES_API_URL=https://host.docker.internal:${API_PORT};
-          echo '🌐 Backstage Headlamp plugin starting with ${KUBERNETES_API_URL}';
-        fi;
-        node packages/backend --config app-config.yaml;
+        export KUBERNETES_API_URL=https://host.docker.internal:6443;
+        echo '🌐 Backstage Headlamp backend starting with ${KUBERNETES_API_URL}';
+        npm start;
       "
 
   spec-tests:
@@ -93,6 +114,7 @@ services:
       context: ./tests
       dockerfile: Dockerfile
     container_name: spec-tests
+    network_mode: "bridge"
     depends_on:
       kind:
         condition: service_healthy
@@ -102,27 +124,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: >
       sh -c "
-        echo '⏳ Waiting for Kind to create API port file...';
-        for i in $(seq 1 30); do
-          if [ -f /api-port.env ]; then
-            echo '✅ Found api-port.env. Loading vars...';
-            . /api-port.env;
-            export KUBERNETES_API_URL=https://host.docker.internal:${API_PORT};
-            echo '🌐 Using ${KUBERNETES_API_URL}';
-            echo '⏳ Waiting for Kubernetes API to become ready...';
-            for j in $(seq 1 30); do
-              if kubectl --insecure-skip-tls-verify --server=${KUBERNETES_API_URL} cluster-info >/dev/null 2>&1; then
-                echo '✅ Cluster reachable, running pytest...';
-                pytest tests/ --api ${KUBERNETES_API_URL};
-                exit 0;
-              fi;
-              echo '  💤 Still waiting... ($j/30)'; sleep 5;
-            done;
-            echo '❌ Kubernetes API never became ready. Exiting cleanly.';
-            exit 1;
-          fi;
-          echo '  💤 Waiting for api-port.env... ($i/30)'; sleep 5;
-        done;
-        echo '❌ api-port.env not found after 150 seconds. Exiting cleanly.';
-        exit 1;
+        echo '✅ Cluster reachable, running pytest...';
+        pytest tests/;
       "

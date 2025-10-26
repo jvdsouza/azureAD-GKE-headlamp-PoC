@@ -9,11 +9,11 @@ networking:
 
 nodes:
   - role: control-plane
-    image: kindest/node:v1.30.0
+    image: kindest/node:v1.26.0
     extraPortMappings:
       # Headlamp (remapped from 4466 → 4566)
       - containerPort: 4466
-        hostPort: 4566
+        hostPort: 0
         protocol: TCP
       # Backstage (remapped from 7007 → 7107)
       - containerPort: 7007

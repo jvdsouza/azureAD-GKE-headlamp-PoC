@@ -1,17 +1,15 @@
-# Dockerfile.kind
-FROM docker:24.0.7-cli-alpine3.18
+# Use the Docker CLI image as the base
+FROM docker:cli
 
-# Install dependencies
-RUN apk add --no-cache bash curl ca-certificates
+# Set working directory
+WORKDIR /workspace
 
-# Install Kind CLI
-ENV KIND_VERSION=v0.23.0
-RUN curl -Lo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64 && \
+# Install curl and bash
+RUN apk add --no-cache bash curl
+
+# Install Kind
+RUN curl -Lo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/v0.23.0/kind-linux-amd64 && \
     chmod +x /usr/local/bin/kind
 
-# Install kubectl for health checks
-RUN curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/v1.30.0/bin/linux/amd64/kubectl && \
-    chmod +x /usr/local/bin/kubectl
-
-WORKDIR /workspace
-ENTRYPOINT ["/bin/sh", "-c"]
+# Default command (so container doesn’t immediately exit)
+CMD ["kind", "version"]

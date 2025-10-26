@@ -1,12 +1,19 @@
 FROM python:3.11-slim
+
+# Set up working directory
 WORKDIR /workspace
 
-COPY requirements.txt .     # ✅ fixed
-RUN pip install -r requirements.txt
+# Make sure the directory exists and is clean
+RUN rm -rf /workspace && mkdir -p /workspace
 
-RUN apt-get update && apt-get install -y curl && \
-    curl -Lo /usr/local/bin/kubectl https://dl.k8s.io/release/v1.30.0/bin/linux/amd64/kubectl && \
-    chmod +x /usr/local/bin/kubectl && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Copy requirements
+COPY requirements.txt /workspace/
 
-CMD ["pytest", "tests/"]
+# Install dependencies
+RUN pip install --no-cache-dir -r /workspace/requirements.txt
+
+# Copy the rest of the test suite
+COPY . /workspace/
+
+# Default command to run all tests
+CMD ["pytest", "--maxfail=1", "--disable-warnings", "-q"]

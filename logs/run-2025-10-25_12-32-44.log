@@ -224,3 +224,566 @@ PS>git init
 PS>git status -s
 
 ]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git add .
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git status -s
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>cd .\backstage\
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstagePS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage> ]633;B
+PS>ls
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstagePS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage> ]633;B
+PS>ls -la
+>> TerminatingError(Get-ChildItem): "A parameter cannot be found that matches parameter name 'la'."
+Get-ChildItem : A parameter cannot be found that matches parameter name 'la'.
+At line:1 char:4
++ ls -la
++    ~~~
+    + CategoryInfo          : InvalidArgument: (:) [Get-ChildItem], ParameterBindingException
+    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand
+Get-ChildItem : A parameter cannot be found that matches parameter name 'la'.
+At line:1 char:4
++ ls -la
++    ~~~
+    + CategoryInfo          : InvalidArgument: (:) [Get-ChildItem], ParameterBindingException
+    + FullyQualifiedErrorId : NamedParameterNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstagePS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage> ]633;B
+PS>cd ..
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>cd .\backstage-plugin\
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>ls
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   1:05 PM                headlamp
+d-----        25/10/2025   1:13 PM                headlamp-backend
+-a----        25/10/2025   1:05 PM              9 .gitignore
+-a----        25/10/2025   3:07 PM            745 Dockerfile
+-a----        25/10/2025   1:05 PM          11558 LICENSE
+-a----        25/10/2025   1:05 PM            435 README.md
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>ls --all
+ls : Cannot find path 'C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\--all' because it does not 
+exist.
+At line:1 char:1
++ ls --all
++ ~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\jason\...ge-plugin\--all:String) [Get-ChildItem], 
+ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand
+ls : Cannot find path 'C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\--all' because it does not exist.
+At line:1 char:1
++ ls --all
++ ~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\jason\...ge-plugin\--all:String) [Get-ChildItem], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>ls
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   1:05 PM                headlamp
+d-----        25/10/2025   1:13 PM                headlamp-backend
+-a----        25/10/2025   1:05 PM              9 .gitignore
+-a----        25/10/2025   3:07 PM            745 Dockerfile
+-a----        25/10/2025   1:05 PM          11558 LICENSE
+-a----        25/10/2025   1:05 PM            435 README.md
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>Get-ChildItem -Force
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d--h--        25/10/2025   3:16 PM                .git
+d-----        25/10/2025   1:05 PM                headlamp
+d-----        25/10/2025   1:13 PM                headlamp-backend
+-a----        25/10/2025   1:05 PM              9 .gitignore
+-a----        25/10/2025   3:07 PM            745 Dockerfile
+-a----        25/10/2025   1:05 PM          11558 LICENSE
+-a----        25/10/2025   1:05 PM            435 README.md
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>rm .\.git\ .\.gitignore
+>> TerminatingError(Remove-Item): "A positional parameter cannot be found that accepts argument '.\.gitignore'."
+Remove-Item : A positional parameter cannot be found that accepts argument '.\.gitignore'.
+At line:1 char:1
++ rm .\.git\ .\.gitignore
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Remove-Item], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand
+Remove-Item : A positional parameter cannot be found that accepts argument '.\.gitignore'.
+At line:1 char:1
++ rm .\.git\ .\.gitignore
++ ~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Remove-Item], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>Get-ChildItem -Force
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d--h--        25/10/2025   3:16 PM                .git
+d-----        25/10/2025   1:05 PM                headlamp
+d-----        25/10/2025   1:13 PM                headlamp-backend
+-a----        25/10/2025   1:05 PM              9 .gitignore
+-a----        25/10/2025   3:07 PM            745 Dockerfile
+-a----        25/10/2025   1:05 PM          11558 LICENSE
+-a----        25/10/2025   1:05 PM            435 README.md
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>rm -f .git
+>> TerminatingError(Remove-Item): "Parameter cannot be processed because the parameter name 'f' is ambiguous. Possible matches include: -Filter -Force."
+Remove-Item : Parameter cannot be processed because the parameter name 'f' is ambiguous. Possible matches include: 
+-Filter -Force.
+At line:1 char:4
++ rm -f .git
++    ~~
+    + CategoryInfo          : InvalidArgument: (:) [Remove-Item], ParameterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameter,Microsoft.PowerShell.Commands.RemoveItemCommand
+Remove-Item : Parameter cannot be processed because the parameter name 'f' is ambiguous. Possible matches include: -Filter -Force.
+At line:1 char:4
++ rm -f .git
++    ~~
+    + CategoryInfo          : InvalidArgument: (:) [Remove-Item], ParameterBindingException
+    + FullyQualifiedErrorId : AmbiguousParameter,Microsoft.PowerShell.Commands.RemoveItemCommand
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>rm -Force .git
+Confirm
+The item at C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\.git has children and the Recurse parameter was not specified. If you continue, all children will be removed with the item. Are you sure you want to continue?
+&Yes  Yes to &All  &No  No to A&ll  &Suspend
+Y
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>ls
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   1:05 PM                headlamp
+d-----        25/10/2025   1:13 PM                headlamp-backend
+-a----        25/10/2025   1:05 PM              9 .gitignore
+-a----        25/10/2025   3:07 PM            745 Dockerfile
+-a----        25/10/2025   1:05 PM          11558 LICENSE
+-a----        25/10/2025   1:05 PM            435 README.md
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>Get-ChildItem -Force
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   1:05 PM                headlamp
+d-----        25/10/2025   1:13 PM                headlamp-backend
+-a----        25/10/2025   1:05 PM              9 .gitignore
+-a----        25/10/2025   3:07 PM            745 Dockerfile
+-a----        25/10/2025   1:05 PM          11558 LICENSE
+-a----        25/10/2025   1:05 PM            435 README.md
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>rm .\.gitignore
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>git add .
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>ls
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   1:05 PM                headlamp
+d-----        25/10/2025   1:13 PM                headlamp-backend
+-a----        25/10/2025   3:07 PM            745 Dockerfile
+-a----        25/10/2025   1:05 PM          11558 LICENSE
+-a----        25/10/2025   1:05 PM            435 README.md
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>cd ..
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git add .
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git status -s
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git commit -m "initial commit"
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git branch -M main
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git remote add origin git@github.com:jvdsouza/azureAD-GKE-headlamp-PoC.git
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git push -u origin main
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git remote add origin https://github.com/jvdsouza/azureAD-GKE-headlamp-PoC.git
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git remote remove origin 
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git remote add origin https://github.com/jvdsouza/azureAD-GKE-headlamp-PoC.git
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git push -u origin main
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>cd .\backstage-plugin\
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>cd .\headlamp\
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-plugin\x5cheadlampPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\headlamp> ]633;B
+PS>ls
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\headlamp
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   1:05 PM                dev
+d-----        25/10/2025   1:05 PM                src
+-a----        25/10/2025   1:05 PM             78 .eslintrc.js
+-a----        25/10/2025   1:05 PM            289 config.d.ts
+-a----        25/10/2025   1:05 PM           1875 package.json
+-a----        25/10/2025   1:05 PM           2166 README.md
+-a----        25/10/2025   1:05 PM            455 tsconfig.json
+-a----        25/10/2025   1:05 PM         733065 yarn.lock
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-plugin\x5cheadlampPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\headlamp> ]633;B
+PS>Get-ChildItem -Force
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\headlamp
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   1:05 PM                dev
+d-----        25/10/2025   1:05 PM                src
+-a----        25/10/2025   1:05 PM             78 .eslintrc.js
+-a----        25/10/2025   1:05 PM            289 config.d.ts
+-a----        25/10/2025   1:05 PM           1875 package.json
+-a----        25/10/2025   1:05 PM           2166 README.md
+-a----        25/10/2025   1:05 PM            455 tsconfig.json
+-a----        25/10/2025   1:05 PM         733065 yarn.lock
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-plugin\x5cheadlampPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\headlamp> ]633;B
+PS>cd ..\headlamp-backend\
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-plugin\x5cheadlamp-backendPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\headlamp-backend> ]633;B
+PS>Get-ChildItem -Force
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\headlamp-backend
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   1:05 PM                dev
+d-----        25/10/2025   1:05 PM                src
+-a----        25/10/2025   1:05 PM             78 .eslintrc.js
+-a----        25/10/2025   1:05 PM             16 .npmignore
+-a----        25/10/2025   1:05 PM            269 catalog-info.yaml
+-a----        25/10/2025   1:05 PM            349 config.d.ts
+-a----        25/10/2025   1:05 PM           2377 package.json
+-a----        25/10/2025   1:05 PM           5146 postinstall.js
+-a----        25/10/2025   1:05 PM           1079 README.md
+-a----        25/10/2025   1:05 PM            309 tsconfig.json
+-a----        25/10/2025   1:05 PM         658311 yarn.lock
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-plugin\x5cheadlamp-backendPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin\headlamp-backend> ]633;B
+PS>cd ..
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>ls
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        25/10/2025   3:22 PM                headlamp
+d-----        25/10/2025   3:22 PM                headlamp-backend
+-a----        25/10/2025   3:07 PM            745 Dockerfile
+-a----        25/10/2025   1:05 PM          11558 LICENSE
+-a----        25/10/2025   1:05 PM            435 README.md
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>gits tatus -s
+gits : The term 'gits' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the 
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ gits tatus -s
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (gits:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+gits : The term 'gits' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ gits tatus -s
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (gits:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>git status -s
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>git push origin main
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>git pull origin main
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlamp\x5cbackstage-pluginPS C:\Users\jason\programming\azureAD-GKE-headlamp\backstage-plugin> ]633;B
+PS>cd ..
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git rm –cached path_to_submodule
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git rm --cached .\backstage-plugin\
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>ls
+
+
+    Directory: C:\Users\jason\programming\azureAD-GKE-headlamp
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        24/10/2025   6:42 PM                .claude
+d-----        24/10/2025   6:42 PM                .specify
+d-----        24/10/2025  10:13 PM                backstage
+d-----        25/10/2025   3:19 PM                backstage-plugin
+d-----        24/10/2025  10:58 PM                k8s
+d-----        25/10/2025  12:32 PM                logs
+d-----        24/10/2025   7:02 PM                specs
+d-----        24/10/2025  11:41 PM                tests
+-a----        24/10/2025  10:19 PM            757 clean-sdd.ps1
+-a----        25/10/2025  12:08 AM           2422 diagnose-sdd.ps1
+-a----        24/10/2025  11:11 PM            540 Dockerfile.kind
+-a----        24/10/2025  11:24 PM           2924 run-sdd.ps1
+-a----        24/10/2025   9:36 PM           1961 run-sdd.sh
+-a----        25/10/2025   2:49 PM           4187 specify-compose.yaml
+-a----        24/10/2025   9:09 PM           3143 specify.yaml
+-a----        24/10/2025   7:14 PM            532 speckit.plan
+-a----        24/10/2025   7:03 PM            430 speckit.tasks
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git status -s
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git add .\backstage-plugin\
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git status -s
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git commit -m "remove submodule"
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>git push origin main
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>docker compose -f specify-compose.yaml build
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>docker builder prune -af
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>docker compose -f specify-compose.yaml build
+
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>docker builder prune -af
+
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>docker compose -f specify-compose.yaml build
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>.\diagnose-sdd.ps1
+
+🔍 Running SpecKit SDD diagnostics...
+
+⚙️ Checking for port conflicts...
+   Port 6443 is free.
+   Port 6445 is free.
+   Port 4466 is free.
+   Port 4566 is free.
+   Port 7007 is free.
+   Port 7107 is free.
+   Port 5556 is free.
+
+🧹 Cleaning up stale containers...
+docker : Error response from daemon: No such container: spec-tests
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ...ner: spec-tests:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+docker : Error response from daemon: No such container: kind-cluster
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ...r: kind-cluster:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+docker : Error response from daemon: No such container: dex
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ... container: dex:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+docker : Error response from daemon: No such container: backstage
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ...iner: backstage:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+docker : Error response from daemon: No such container: headlamp
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ...ainer: headlamp:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+🧼 Clearing Docker build cache...
+
+🔨 Rebuilding SpecKit stack...
+
+
+🚀 Starting environment...
+
+
+🩺 Checking container health...
+   ⚠️ spec-tests not found!
+   ⚠️ kind-cluster not found!
+   ⚠️ dex not found!
+   ⚠️ backstage not found!
+   ⚠️ headlamp not found!
+
+✅ Diagnostics complete. If tests still fail, re-run with '--no-cache'.
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>docker builder prune -af
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>.\diagnose-sdd.ps1
+
+🔍 Running SpecKit SDD diagnostics...
+
+⚙️ Checking for port conflicts...
+   Port 6443 is free.
+   Port 6445 is free.
+   Port 4466 is free.
+   Port 4566 is free.
+   Port 7007 is free.
+   Port 7107 is free.
+   Port 5556 is free.
+
+🧹 Cleaning up stale containers...
+docker : Error response from daemon: No such container: spec-tests
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ...ner: spec-tests:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+docker : Error response from daemon: No such container: kind-cluster
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ...r: kind-cluster:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+docker : Error response from daemon: No such container: dex
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ... container: dex:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+docker : Error response from daemon: No such container: backstage
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ...iner: backstage:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+docker : Error response from daemon: No such container: headlamp
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:32 char:5
++     docker rm -f $container 2>$null | Out-Null
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error response ...ainer: headlamp:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+🧼 Clearing Docker build cache...
+
+🔨 Rebuilding SpecKit stack...
+
+
+🚀 Starting environment...
+
+
+🩺 Checking container health...
+   ⚠️ spec-tests not found!
+   ⚠️ kind-cluster not found!
+   ⚠️ dex not found!
+   ⚠️ backstage not found!
+   ⚠️ headlamp not found!
+
+✅ Diagnostics complete. If tests still fail, re-run with '--no-cache'.
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>docker builder prune -af
+
+]633;D;0]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+]633;D]633;A]633;P;Cwd=C:\x5cUsers\x5cjason\x5cprogramming\x5cazureAD-GKE-headlampPS C:\Users\jason\programming\azureAD-GKE-headlamp> ]633;B
+PS>.\diagnose-sdd.ps1
+
+🔍 Running SpecKit SDD diagnostics...
+
+⚙️ Checking for port conflicts...
+   Port 6443 is in use. Releasing...
+Cannot overwrite variable PID because it is read-only or constant.
+At C:\Users\jason\programming\azureAD-GKE-headlamp\diagnose-sdd.ps1:15 char:9
++         $pid = ($portUsed -split "\s+")[-1]
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (PID:String) [], SessionStateUnauthorizedAccessException
+    + FullyQualifiedErrorId : VariableNotWritable

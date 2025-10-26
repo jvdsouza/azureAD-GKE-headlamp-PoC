@@ -1,23 +1,20 @@
-# Base: official Backstage container
-FROM ghcr.io/backstage/backstage:1.44.1
+# Base image — plain Node instead of Backstage
+FROM node:20-bullseye
 
+# Set working directory
 WORKDIR /app
 
-# Copy both the backend and frontend plugins into the correct locations
-COPY headlamp-backend /app/plugins/headlamp-backend
-COPY headlamp /app/plugins/headlamp
+# Copy plugin source
+COPY headlamp-backend /app
 
-# Install dependencies
-RUN cd /app/plugins/headlamp-backend && npm install --legacy-peer-deps
-RUN cd /app/plugins/headlamp && npm install --legacy-peer-deps
+# Install dependencies (use npm, not yarn)
+RUN npm install --legacy-peer-deps
 
-# Optional: build if scripts are present
-RUN mkdir -p /app/app
-RUN cd /app/plugins/headlamp-backend && npm run build || true
-RUN cd /app/plugins/headlamp && npm run build || true
+# Optional build step if script exists
+RUN npm run build || true
 
-# Expose Backstage port
+# Expose port for Backstage backend
 EXPOSE 7007
 
-# Start the Backstage backend
-CMD ["node", "packages/backend", "--config", "app-config.yaml"]
+# Run plugin backend directly
+CMD ["npm", "start"]
